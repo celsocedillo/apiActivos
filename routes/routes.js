@@ -13,6 +13,7 @@ const ItemController = require('../controllers/itemController.js');
 //router.get('/EstadoSituacion/', EstadoSituacionController.getAll);
 router.get('/OtrosServicios/EstadoSituacionByUsuario/:pusuario', OtrosSeviciosController.getEstadoSituacionByUsuario);
 router.get('/OtrosServicios/PermisoAprobar/:usuario', OtrosSeviciosController.getPermisoAprobar);
+router.get('/OtrosServicios/DatosSesion/:usuario', OtrosSeviciosController.getDatosSesion);
 
 router.get('/ActivoByCodigo/:pcodigo', VwActivoController.getActivoByCodigo);
 router.get('/ActivoByFiltroCodigo/:pfiltro', VwActivoController.getActivoByFiltroCodigo);

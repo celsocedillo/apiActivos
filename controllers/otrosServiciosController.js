@@ -4,6 +4,7 @@ const PermisoEstado = require('../model').PermisoEstado;
 //const Sequelize = require("sequelize-oracle");
 const Sequelize = require("spider-sequelize-oracle");
 const db = require("../model/index.js");
+const config = require('../../config/config');
 
 module.exports = {
 
@@ -42,6 +43,30 @@ module.exports = {
 			console.log(err);
 			res.status(501).json({error: err.stack});
 		 }
+	},
+
+	async getDatosSesion(req, res){
+		try{
+			let query = "select usuario_display from vw_empleado where usuario = '" + req.params.usuario + "'";
+			const[result, metadata] = await db.sequelize.query(query);
+			let datosSesion;
+			if (metadata.rows.length > 0){
+				datosSesion =  {usuario: req.params.usuario, 
+								usuarioDisplay : metadata.rows[0].USUARIO_DISPLAY,
+								baseDatos : config.baseDatos
+							   }
+				
+			}else{
+				datosSesion =  {usuario: req.params.usuario, 
+								usuarioDisplay :'',
+								baseDatos : config.baseDatos
+							   }
+			}
+			res.status(200).json({datosSesion});	
+		}catch(err){
+			console.log(err);
+			res.status(501).json({error: err.stack});
+		}
 	}
 
 	

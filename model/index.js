@@ -1,4 +1,4 @@
-const dbConfig = require("../config/dbconfig.js");
+//const dbConfig = require("../config/dbconfig.js");
 
 // const Sequelize = require("sequelize");
 // const sequelize = new Sequelize(
@@ -19,10 +19,11 @@ const dbConfig = require("../config/dbconfig.js");
 //   			}
 // 	});
 //const Sequelize = require("sequelize-oracle");
+const config = require('../../config/config');
 const Sequelize = require("spider-sequelize-oracle");
-const sequelize = new Sequelize('oradesa', 'erco', 'erco',
+const sequelize = new Sequelize(config.baseDatos, config.usuario, config.password,
    {
-        host: '192.198.12.200',
+        host: config.host,
         port: '1522',
         dialect: "oracle",
         define: {
