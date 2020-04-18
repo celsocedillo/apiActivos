@@ -6,11 +6,6 @@ const OtrosSeviciosController = require('../controllers/otrosServiciosController
 const VwActivoController = require('../controllers/vwActivoController.js');
 const Acta = require('../controllers/actaController.js');
 
-/*const GrupoController = require('../controllers/grupoController.js');
-const MedidaController = require('../controllers/medidaController.js');
-const ItemController = require('../controllers/itemController.js');
-*/
-//router.get('/EstadoSituacion/', EstadoSituacionController.getAll);
 router.get('/OtrosServicios/EstadoSituacionByUsuario/:pusuario', OtrosSeviciosController.getEstadoSituacionByUsuario);
 router.get('/OtrosServicios/PermisoAprobar/:usuario', OtrosSeviciosController.getPermisoAprobar);
 router.get('/OtrosServicios/DatosSesion/:usuario', OtrosSeviciosController.getDatosSesion);

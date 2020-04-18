@@ -2,13 +2,14 @@ const Acta = require('../model/').Acta;
 const VwActivo = require('../model/').VwActivo;
 const ActaDetalle = require('../model/').ActaDetalle;
 const EstadoSituacion = require('../model/').EstadoSituacion;
+const logger = require('../utils/logger');
 const Sequelize = require("spider-sequelize-oracle");
 const db = require("../model/index.js");
 
 	function procesaDetalle(pregistro){
 		
 			ActaDetalle.create(pregistro)/*.then(async resp =>{
-				console.log('detalle creado');
+				logger.error('detalle creado');
 				return resp;
 			})*/;
 		
@@ -32,7 +33,7 @@ module.exports = {
 			res.status(201).send(registro);
 		}
 		catch(e){
-			console.log(e);
+			logger.error(e);
 			res.status(500).send(e);
 		}
 	},
@@ -40,7 +41,6 @@ module.exports = {
 	async getActasByEstadoSituacion(req, res){
 		try{
 			const op = Sequelize.Op
-			console.log(req.query);
 			const lista = await Acta.findAll({
 				include: [{model: EstadoSituacion,
 						   as: 'EstadoInicial'},
@@ -51,7 +51,7 @@ module.exports = {
 		    });
 			res.status(201).send(lista);
 		}catch(e){
-			console.log(e);
+			logger.error(e);
 			res.status(500).send(e);
 		}
 	},
@@ -74,7 +74,7 @@ module.exports = {
 			res.status(201).send(registro);
 		}
 		catch(e){
-			console.log(e);
+			logger.error(e);
 			res.status(500).send(e);
 		}
 	},
@@ -132,8 +132,8 @@ module.exports = {
 				// 	// 	.then(data => {
 				// 	// 		numeroActivos++;
 		  //  //          		totalValor += element.valorCompraIva;
-		  //  //          		console.log('Actualiza '+element.id);
-		  //  //          		console.log(numeroActivos + ' ' + totalValor);
+		  //  //          		logger.error('Actualiza '+element.id);
+		  //  //          		logger.error(numeroActivos + ' ' + totalValor);
 				// 	// 	})
 				// 	// 	.catch(err => res.json({error: err}));
 				// 	// responsePromises.push(promise);
@@ -142,8 +142,8 @@ module.exports = {
 				// 	let res= await procesaDetalle(detalle);
 				// 		numeroActivos++;
 	   //          		totalValor += element.valorCompraIva;
-	   //          		console.log('Actualiza '+element.id);
-	   //          		console.log(numeroActivos + ' ' + totalValor);
+	   //          		logger.error('Actualiza '+element.id);
+	   //          		logger.error(numeroActivos + ' ' + totalValor);
 
 
 		  //         }
@@ -172,11 +172,11 @@ module.exports = {
 			            valorCompraIva: element.valorCompraIva
 		            }
 		            const res= await procesaDetalle(detalle);
-		            console.log(res);
+		            logger.error(res);
 		            numeroActivos++;
 		         		totalValor += element.valorCompraIva;
-		          		console.log('Actualiza '+detalle.id);
-		         		console.log(numeroActivos + ' ' + totalValor);
+		          		logger.error('Actualiza '+detalle.id);
+		         		logger.error(numeroActivos + ' ' + totalValor);
 		        }
 		  	// 	const resultadoDetalle = await Promise.all(req.body.Detalle.map(element => {
 		  	// 		if (element.estado == "I"){
@@ -196,20 +196,20 @@ module.exports = {
 					// .then(data => {
 					// 	numeroActivos++;
 		   //       		totalValor += element.valorCompraIva;
-		   //        		console.log('Actualiza '+detalle.id);
-		   //       		console.log(numeroActivos + ' ' + totalValor);
+		   //        		logger.error('Actualiza '+detalle.id);
+		   //       		logger.error(numeroActivos + ' ' + totalValor);
 					// })
 					// .catch(err => res.json({error: err}));
 		  	// 	}}));
 			});
 		}
-			console.log(responsePromises);
-			console.log('resultadoDetalle')
-			//console.log(resultadoDetalle);
+			logger.error(responsePromises);
+			logger.error('resultadoDetalle')
+			//logger.error(resultadoDetalle);
 			//let responses = await Promise.all(responsePromises);
 
-			console.log(numeroActivos + ' ' + totalValor);
-			console.log('update acta');
+			logger.error(numeroActivos + ' ' + totalValor);
+			logger.error('update acta');
 			let record = {
 				fechaActa: req.body.fechaActa,
 				numeroActa: req.body.numeroActa,
@@ -222,7 +222,7 @@ module.exports = {
 				totalValor: totalValor,
 				estado: req.body.estado
 			}
-			console.log('Actualizar acta ');
+			logger.error('Actualizar acta ');
 			Acta.update(record, {
 				where: {id: req.body.id}
 			})
@@ -230,17 +230,17 @@ module.exports = {
 					res.status(200).json({success:true, message: "Acta actualizada con exito", respuesta: data});
 				}).catch(err => res.json({error: err}));
 		}catch(e){
-			console.log(e);
+			logger.error(e);
 			res.send(500);
 		}
 	},
 
 	async update(req, res){		
 /* 		let query = "begin tmp_retorno(); end;";
-		const[result, metadata] = await db.sequelize.query(query).then().catch(err => console.log(err));
-		console.log('resp sp');
-		console.log(JSON.stringify(result) +" metadata " + JSON.stringify(metadata));
-		console.log(metadata);
+		const[result, metadata] = await db.sequelize.query(query).then().catch(err => logger.error(err));
+		logger.error('resp sp');
+		logger.error(JSON.stringify(result) +" metadata " + JSON.stringify(metadata));
+		logger.error(metadata);
  */		
 
 
@@ -275,13 +275,11 @@ module.exports = {
 				            valorCompraIva: element.valorCompraIva
 						}
 						try{
-							console.log('Insertar');
 							const eje = await ActaDetalle.create(detalle, {transaction: transaction});
 							numeroActivos++;
 			         		totalValor += element.valorCompraIva;
-			          		console.log('sumando ');
 						}catch(err) {
-							console.log(err);
+							logger.error(err);
 							throw new Error('Error en creacion de detalle');
 							//res.status(501).json({error: err}).send();
 						}
@@ -289,17 +287,16 @@ module.exports = {
 						).then(data => {
 			            	numeroActivos++;
 			         		totalValor += element.valorCompraIva;
-			          		console.log('Actualiza '+data);
-			         		console.log(numeroActivos + ' ' + totalValor);
+			          		logger.error('Actualiza '+data);
+			         		logger.error(numeroActivos + ' ' + totalValor);
 			            }).catch(err => res.status(501).json({error: err}));
  */  					}else if (element.estado == "X"){
 					//Registro a eliminar
 						try{
-							console.log('eliminar');
 							const eje = await ActaDetalle.destroy({where: {id: element.id}, transaction: transaction})
 							.then();
 						}catch(err){
-							console.log(err);
+							logger.error(err);
 							throw new Error('Error en eliminar un detalle');
 						}
 					}
@@ -319,24 +316,19 @@ module.exports = {
 				//estado: "A55555"
 				estado: req.body.estado
 			}
-			console.log('actualizando cabecera');
-			console.log(numeroActivos +  ' '+ totalValor);
 			const resp = await Acta.update(record, {
 				where: {id: req.body.id},
 				transaction: transaction
 			})
 			.then()
 			.catch(err => {							
-				console.log(err);
+				logger.error(err);
 				throw new Error('Error en actualizar el acta');
 			});
-			console.log('**********************************commit***************************');
 			await transaction.commit();
-			console.log('fin');
 			res.status(200).json({success:true, message: "Acta actualizada con exito act", respuesta: resp});
 		}catch(e){
-			console.log(e);
-			console.log('rollback');
+			logger.error(e);
 			await transaction.rollback();
 			res.status(501).json({error: e.stack});
 		}
@@ -349,8 +341,7 @@ module.exports = {
 			const[result, metadata] = await db.sequelize.query(query);
 			res.status(200).json({success:true, message: "Validacion", respuesta: metadata});	
 		 }catch(err){
-			console.log('err sp'); 
-			console.log(err);
+			logger.error(err);
 			res.status(501).json({error: err.stack});
 		 }
 	},
@@ -358,13 +349,12 @@ module.exports = {
 	async aprueba(req, res){
 		 
 		try{
-			//console.log(req);
+			//logger.error(req);
 		   let query = "begin EAFPK_ACTA_CAMBIOESTADO.EAFPR_APRUEBA("+req.params.id+",'"+req.query.usuario+"'); end;";
 		   const[result, metadata] = await db.sequelize.query(query);
 		   res.status(200).json({success:true, message: "Validacion", respuesta: metadata});	
 		}catch(err){
-		   console.log('err sp'); 
-		   console.log(err);
+		   logger.error(err);
 		   res.status(501).json({error: err.stack});
 		}
 	

@@ -21,6 +21,7 @@
 //const Sequelize = require("sequelize-oracle");
 const config = require('../../config/config');
 const Sequelize = require("spider-sequelize-oracle");
+const logger =require('../utils/logger');
 const sequelize = new Sequelize(config.baseDatos, config.usuario, config.password,
    {
         host: config.host,
@@ -31,7 +32,8 @@ const sequelize = new Sequelize(config.baseDatos, config.usuario, config.passwor
             freezeTableName: true
         },
         pool: { maxConnections: 5,
-                maxIdleTime: 3000}
+                maxIdleTime: 3000},
+        logging: logger.info
   });
 
 const db = {};

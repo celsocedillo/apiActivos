@@ -19,6 +19,7 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.5",
     "sequelize-oracle": "^3.3.2-0.0",
-    "spider-sequelize-oracle": "^1.1.2"
+    "spider-sequelize-oracle": "^1.1.2",
+    "winston": "^3.2.1"
   }
 }

@@ -5,6 +5,7 @@ const PermisoEstado = require('../model').PermisoEstado;
 const Sequelize = require("spider-sequelize-oracle");
 const db = require("../model/index.js");
 const config = require('../../config/config');
+const logger = require('../utils/logger');
 
 module.exports = {
 
@@ -14,7 +15,7 @@ module.exports = {
 			res.status(201).send(registro);
 		}
 		catch(e){
-			console.log(e);
+			logger.error(e);
 			res.status(500).send(e);
 		}
 	},
@@ -28,7 +29,7 @@ module.exports = {
 			res.status(201).send(registro);
 		}
 		catch(e){
-			console.log(e);
+			logger.error('aqui '+ e);
 			res.status(500).send(e);
 		}
 	},
@@ -39,8 +40,8 @@ module.exports = {
 			const[result, metadata] = await db.sequelize.query(query);
 			res.status(200).json({respuesta: metadata.rows});	
 		 }catch(err){
-			console.log('err sp'); 
-			console.log(err);
+			logger.error('err sp'); 
+			logger.error(err);
 			res.status(501).json({error: err.stack});
 		 }
 	},
@@ -64,7 +65,7 @@ module.exports = {
 			}
 			res.status(200).json({datosSesion});	
 		}catch(err){
-			console.log(err);
+			logger.error(err);
 			res.status(501).json({error: err.stack});
 		}
 	}

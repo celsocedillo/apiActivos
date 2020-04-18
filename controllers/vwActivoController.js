@@ -1,3 +1,4 @@
+const logger = require('../utils/logger');
 const VwActivo = require('../model/').VwActivo;
 
 
@@ -28,6 +29,7 @@ module.exports = {
 			res.status(201).send(registro);
 		}
 		catch(e){
+			logger.error(e);
 			res.status(500).send(e);
 		}
 
@@ -35,7 +37,6 @@ module.exports = {
 
 	async getActivoByFiltroCodigo(req, res){
 		try{ 
-			console.log(req);
 			const buscar = '%'+req.params.pfiltro+'%';
 			let condicionWhere = {$or: [
 										  {codActControl: {$like: buscar}}, 
@@ -51,6 +52,7 @@ module.exports = {
 			res.status(201).send(registro);
 		}
 		catch(e){
+			logger.error(e);
 			res.status(500).send(e);
 		}
 	}
