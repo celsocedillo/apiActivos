@@ -25,7 +25,7 @@ const logger =require('../utils/logger');
 const sequelize = new Sequelize(config.baseDatos, config.usuario, config.password,
    {
         host: config.host,
-        port: '1522',
+        port: config.puerto,
         dialect: "oracle",
         define: {
             timestamps: false,
