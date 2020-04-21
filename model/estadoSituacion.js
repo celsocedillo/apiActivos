@@ -11,6 +11,7 @@ module.exports = (sequelize, Sequelize) => {
     EstadoSituacion.hasMany(models.PermisoEstado,{foreignKey: 'estadoDestinoId', as: "EstadoDestino"});
     EstadoSituacion.hasMany(models.Acta,{foreignKey: 'estadoInicialId', as: "EstadoInicial"});
     EstadoSituacion.hasMany(models.Acta,{foreignKey: 'estadoFinalId', as: "EstadoFinal"});
+    EstadoSituacion.hasMany(models.ArchivoMigracion,{foreignKey: 'estadoSituacionId', as: "EstadoSituacion"});
   }
 
   return EstadoSituacion;
