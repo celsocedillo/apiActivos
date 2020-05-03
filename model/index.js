@@ -19,6 +19,8 @@ const db = {};
 
 //const  models = sequelize.import('./tipomovimiento');
 db['EstadoSituacion'] = sequelize.import('./estadoSituacion');
+db['TipoActivo'] = sequelize.import('./tipoActivo');
+db['ClaseActivo'] = sequelize.import('./claseActivo');
 db['PermisoEstado'] = sequelize.import('./permisoEstado');
 db['VwActivo'] = sequelize.import('./vwActivo');
 db['Acta'] = sequelize.import('./Acta');

@@ -42,7 +42,16 @@ module.exports = (sequelize, Sequelize) => {
   
     ActivoMigracion.associate = function(models){
         ActivoMigracion.belongsTo(models.ArchivoMigracion,{foreignKey: 'archivoId', as: "Detalle"});
-      //ActivoMigracion.belongsTo(models.VwActivo,{foreignKey: 'activoId', as: "Activo"});
+        ActivoMigracion.belongsTo(models.TipoActivo,{foreignKey: 'tipoActivoId', as: "TipoAct"});
+        ActivoMigracion.belongsTo(models.ClaseActivo,{foreignKey: "claseActivoId",  
+                                                      as: "ClaseAct", 
+                                                      scope: {
+                                                                tipoActivoId: sequelize.where(sequelize.col('Detalle.ID_TIPO_ACTIVO'), 
+                                                                                              '=', sequelize.col('Detalle.ClaseAct.ID_TIPO_ACTIVO'))
+                                                              }
+                                                      }
+                                  );
+
     }
   
     return ActivoMigracion;
