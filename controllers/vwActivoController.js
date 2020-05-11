@@ -4,6 +4,19 @@ const VwActivo = require('../model/').VwActivo;
 
 module.exports = {
 
+	async getActivoById(req, res){
+		try{ 
+			
+			const registro = await VwActivo.findOne({where: {id: req.params.id}});
+			res.status(201).send(registro);
+		}
+		catch(e){
+			logger.error(e);
+			res.status(500).send(e);
+		}
+
+	},
+
 	async getActivoByCodigo(req, res){
 		try{ 
 			const codigo = req.params.pcodigo;

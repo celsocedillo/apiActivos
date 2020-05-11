@@ -13,6 +13,7 @@ router.get('/OtrosServicios/DatosSesion/:usuario', OtrosSeviciosController.getDa
 
 router.get('/ActivoByCodigo/:pcodigo', VwActivoController.getActivoByCodigo);
 router.get('/ActivoByFiltroCodigo/:pfiltro', VwActivoController.getActivoByFiltroCodigo);
+router.get('/ActivoById/:id', VwActivoController.getActivoById);
 
 router.get('/Acta/', Acta.getAll);
 router.get('/Acta/ByEstadoSituacion', Acta.getActasByEstadoSituacion);
