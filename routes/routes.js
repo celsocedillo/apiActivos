@@ -25,5 +25,8 @@ router.post('/Acta/Aprueba/:id', Acta.aprueba);
 
 router.get('/ArchivoMigracion/', ArchivoMigracion.getAll);
 router.get('/ArchivoMigracion/:id', ArchivoMigracion.getArchivoMigracion);
+router.post('/ArchivoMigracion/', ArchivoMigracion.create);
+router.put('/ArchivoMigracion/', ArchivoMigracion.update);
+router.put('/ArchivoMigracion/eliminarGrupo', ArchivoMigracion.elimnarGrupo);
 
 module.exports = router;
