@@ -28,5 +28,6 @@ router.get('/ArchivoMigracion/:id', ArchivoMigracion.getArchivoMigracion);
 router.post('/ArchivoMigracion/', ArchivoMigracion.create);
 router.put('/ArchivoMigracion/', ArchivoMigracion.update);
 router.put('/ArchivoMigracion/eliminarGrupo', ArchivoMigracion.elimnarGrupo);
+router.put('/ArchivoMigracion/eliminarActivos', ArchivoMigracion.eliminarActivos);
 
 module.exports = router;

@@ -189,6 +189,73 @@ module.exports = {
 			logger.error('Envio error al usaurio ' + e.stack);
 			res.status(501).json({error: e.stack});
 		}
+	},
+
+	async eliminarActivos(req, res){
+		try{
+			
+			//busca la cabecera para despues actualizar los valores
+			let archivo = await ArchivoMigracion.findOne({where: {id: req.body.id}}).then()
+						  .catch(err =>{
+							logger.error(err);
+							throw new Error('Error en consultar el archivo');			
+						});
+
+			let numeroActivos = archivo.numeroActivos;
+			let totalActivos = archivo.totalActivos;
+			
+			//Borrar los activos
+			if (req.body.todos){
+				//Borrar todos los activos
+				/* const borra = await ActivoMigracion.destroy({where: {archivoId: req.body.id}})
+				.then()
+				.catch(err =>{
+					logger.error(err);
+					throw new Error('Error en borrar todos los activos ');			
+				}); */
+				logger.info('Borrando todos')
+				numeroActivos=0;
+				totalActivos=0;
+			}else{
+				//Borrar activos seleccionados
+				let contActivos = 0;
+				let acumValor = 0;		
+	
+				req.body.lstActivos.forEach(element => {
+					/* const borra = await ActivoMigracion.destroy({where: {id: element.id}})
+					.then()
+					.catch(err =>{
+						logger.error(err);
+						throw new Error('Error en borrar un activo ');			
+					}); */
+					logger.info('Borrando activo')
+					contActivos++;
+					acumValor+=element.valorCompra;
+				});
+				numeroActivos-=contActivos;
+				totalActivos-=acumValor;
+			}
+
+			//Actualizando la cabecera
+			archivo.numeroActivos = numeroActivos;
+			archivo.totalActivos = totalActivos;
+			
+			/* const resp = await ArchivoMigracion.update(archivo, {
+				where: {id: req.body.id}
+			})
+			.then()
+			.catch(err => {							
+				logger.error(err);
+				throw new Error('Error en actualizar el acta de archivo ');
+			}); */
+			logger.info('actualizando totales #'+ archivo.numeroActivos + ' $' + archivo.totalActivos);
+
+			res.status(200).json({success:true, message: "Acta de archivo actualizada con exito act", respuesta: null});
+
+		}catch(e){
+			logger.error('Envio error al usaurio ' + e.stack);
+			res.status(501).json({error: e.stack});
+		}
 	}
 
 }
